@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b32">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="مدير العقارات">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>مدير العقارات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="splash">
+  <div class="splash-logo">🏢</div>
+  <div class="splash-name">مدير العقارات</div>
+  <div class="splash-spinner"></div>
+</div>
+
+    <div id="login-box">
+    <div class="login-card">
+      <div class="login-logo">🏢</div>
+      <h1>مدير العقارات</h1>
+      <p class="login-sub">سجّل دخولك للمتابعة</p>
+
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="الإيميل" required>
+        <input type="password" id="login-password" placeholder="كلمة السر" required>
+        <button type="submit">دخول</button>
+      </form>
+
+      <p id="login-error"></p>
+    </div>
+  </div>
+
+    <div id="app" style="display:none">
+
+    <aside id="sidebar">
+      <div class="brand">🏢 <span>مدير العقارات</span></div>
+
+      <nav id="tabs">
+        <button type="button" data-tab="home" class="tab-btn active">📊 الرئيسية</button>
+        <button type="button" data-tab="properties" class="tab-btn">🏠 العقارات</button>
+        <button type="button" data-tab="customers" class="tab-btn">👥 العملاء</button>
+        <button type="button" data-tab="followups" class="tab-btn">📞 المتابعات</button>
+        <button type="button" data-tab="deals" class="tab-btn">🤝 الصفقات والعمولات</button>
+        <button type="button" data-tab="reports" class="tab-btn">📈 التقارير</button>
+      </nav>
+            <button id="theme-btn" type="button">🌙 الوضع الليلي</button>
+      <button id="logout-btn">🚪 تسجيل خروج</button>
+    </aside>
+
+    <main id="main">
+      <p id="status">جاري التحميل...</p>
+
+      <section class="tab active" id="tab-home">
+                <div class="welcome">
+          <div>
+            <h1 id="welcome-title">أهلًا بيك 👋</h1>
+            <p id="welcome-date"></p>
+          </div>
+          <div class="welcome-art">🏙️</div>
+        </div>
+        <h2>لوحة التحكم</h2>
+        <div id="dashboard" class="dashboard"></div>
+
+        <div class="charts">
+          <div class="chart-box">
+            <h3>حالة العقارات</h3>
+            <div class="chart-canvas"><canvas id="chart-properties"></canvas></div>
+          </div>
+          <div class="chart-box">
+            <h3>تحصيل العمولات</h3>
+            <div class="chart-canvas"><canvas id="chart-commissions"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+    <!-- العقارات -->
+<section class="tab" id="tab-properties">
+  
+  <h2>العقارات</h2>
+      <input type="text" id="property-search" placeholder="ابحث في العقارات (نوع، منطقة، محافظة...)">
+      <select id="property-status-filter">
+        <option value="">كل الحالات</option>
+        <option value="available">متاح</option>
+        <option value="reserved">محجوز</option>
+        <option value="sold">مباع</option>
+      </select>
+
+      <div id="properties-list"></div>
+
+      <h2>إضافة عقار جديد</h2>
+      <<form id="property-form">
+  <input type="text" id="type" placeholder="النوع (شقة، فيلا...)" required>
+  <input type="text" id="governorate" placeholder="المحافظة">
+  <input type="text" id="area" placeholder="المنطقة">
+  <input type="text" id="address" placeholder="العنوان بالتفصيل">
+  <input type="number" id="price" placeholder="السعر">
+  <input type="number" id="area-m2" placeholder="المساحة (م²)" min="0">
+  <input type="number" id="rooms" placeholder="عدد الغرف" min="0">
+  <input type="number" id="bathrooms" placeholder="عدد الحمامات" min="0">
+  <input type="number" id="floor" placeholder="الدور" min="0">
+  <select id="finishing">
+    <option value="">التشطيب</option>
+    <option value="لوكس">لوكس</option>
+    <option value="سوبر لوكس">سوبر لوكس</option>
+    <option value="نصف تشطيب">نصف تشطيب</option>
+    <option value="على الطوب">على الطوب</option>
+  </select>
+  <select id="p-status">
+    <option value="available">متاح</option>
+    <option value="reserved">محجوز</option>
+    <option value="sold">مباع</option>
+  </select>
+  <button type="submit">حفظ العقار</button>
+</form>
+    </section>
+
+    <!-- العملاء -->
+    <section class="tab" id="tab-customers">
+      <h2>العملاء</h2>
+      <input type="text" id="customer-search" placeholder="ابحث في العملاء (اسم، تليفون، منطقة...)">
+      <div id="customers-list"></div>
+
+      <h2>إضافة عميل جديد</h2>
+      <form id="customer-form">
+        <input type="text" id="c-name" placeholder="اسم العميل" required>
+        <input type="text" id="c-phone" placeholder="رقم التليفون">
+        <input type="number" id="c-budget" placeholder="الميزانية">
+        <input type="text" id="c-area" placeholder="المنطقة المطلوبة">
+        <input type="text" id="c-type" placeholder="نوع العقار المطلوب">
+        <button type="submit">حفظ العميل</button>
+      </form>
+
+      <h2>ربط عميل بعقار</h2>
+      <form id="link-form">
+        <select id="link-customer" required></select>
+        <select id="link-property" required></select>
+        <button type="submit">ربط</button>
+      </form>
+      <div id="links-list"></div>
+    </section>
+
+    <!-- المتابعات -->
+    <section class="tab" id="tab-followups">
+      <h2>متابعات اليوم والمتأخرة</h2>
+      <div id="due-list"></div>
+
+      <h2>تسجيل متابعة</h2>
+      <form id="followup-form">
+        <select id="f-customer" required></select>
+        <select id="f-property"></select>
+        <select id="f-method">
+          <option value="call">مكالمة</option>
+          <option value="whatsapp">واتساب</option>
+          <option value="visit">معاينة</option>
+          <option value="meeting">مقابلة</option>
+        </select>
+        <input type="text" id="f-result" placeholder="نتيجة التواصل">
+        <input type="date" id="f-next">
+        <button type="submit">حفظ المتابعة</button>
+      </form>
+
+      <h2>كل المتابعات</h2>
+      <div id="followups-list"></div>
+    </section>
+
+    <!-- الصفقات والعمولات -->
+    <section class="tab" id="tab-deals">
+      <h2>تسجيل صفقة</h2>
+      <form id="deal-form">
+        <select id="d-customer" required></select>
+        <select id="d-property" required></select>
+        <input type="number" id="d-price" placeholder="السعر المتفق عليه">
+        <input type="date" id="d-date">
+        <select id="d-status">
+          <option value="negotiating">تفاوض</option>
+          <option value="completed">مكتملة</option>
+          <option value="cancelled">ملغاة</option>
+        </select>
+        <input type="text" id="d-notes" placeholder="ملاحظات">
+        <button type="submit">حفظ الصفقة</button>
+      </form>
+      <div id="deals-list"></div>
+
+      <h2>تسجيل عمولة</h2>
+      <form id="commission-form">
+        <select id="cm-deal" required></select>
+        <input type="number" id="cm-percentage" placeholder="نسبة العمولة %" step="0.01" min="0" max="100" required>
+        <input type="number" id="cm-paid" placeholder="المدفوع (اختياري)" min="0">
+        <button type="submit">حفظ العمولة</button>
+      </form>
+      <div id="commissions-list"></div>
+    </section>
+
+    <!-- التقارير -->
+        <section class="tab" id="tab-reports">
+      <h2>تقرير الأداء</h2>
+
+      <div class="quick-ranges">
+        <button type="button" class="chip" data-range="month">هذا الشهر</button>
+        <button type="button" class="chip" data-range="30">آخر 30 يوم</button>
+        <button type="button" class="chip" data-range="year">هذه السنة</button>
+      </div>
+
+      <form id="report-form">
+        <label>من <input type="date" id="r-from" required></label>
+        <label>إلى <input type="date" id="r-to" required></label>
+        <button type="submit">عرض التقرير</button>
+      </form>
+
+      <div id="report-empty" class="empty-state">
+        <div class="empty-icon">📈</div>
+        <p>اختار فترة من الأزرار فوق أو حدد التواريخ، وهيظهر لك تقرير الأداء</p>
+      </div>
+
+      <div id="report-output" style="display:none">
+        <div id="report-result" class="dashboard"></div>
+
+        <div class="charts">
+          <div class="chart-box">
+            <h3>نشاط الفترة</h3>
+            <div class="chart-canvas"><canvas id="chart-report-activity"></canvas></div>
+          </div>
+          <div class="chart-box">
+            <h3>تحصيل عمولات الفترة</h3>
+            <div class="chart-canvas"><canvas id="chart-report-commissions"></canvas></div>
+          </div>
+                  <div class="chart-box wide">
+          <h3>الأداء خلال آخر 6 شهور</h3>
+          <div class="chart-canvas tall"><canvas id="chart-trend"></canvas></div>
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+      </section>
+
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+  <script src="marketing.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js").catch((error) => {
+          console.error("تعذر تسجيل Service Worker:", error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
